@@ -1,40 +1,41 @@
 import { Fragment } from "react";
 import Button from "../components/elements/button";
+import { getmember } from "../services/member.service";
 
 const ListMember = () => {
 
-  const email = localStorage.getItem("email");
+  const token = localStorage.getItem("token");
 
-    const members = [
-        {
-            id: 1,
-            name: "Achmad Muhajid",
-            email: "muhajidachmad@gmail.com",
-            jabatan: "Programmer"
-        },
-        {
-            id: 2,
-            name: "Luqman Solihin",
-            email: "luqman@gmail.com",
-            jabatan: "Backend Developer"
-        }
-    ];
+    const members = [];
+
+    const params = {
+      'page' : 1,
+      'search': ""
+  };
+
+  const headers = {
+     Authorization: `Bearer ${token}`
+  };
+
+  console.log(headers);
+
+  getmember(`Bearer ${token}`, (status, res) => {
+      console.log(res);
+  } );
 
     const logoutHandle = () => {
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
         window.location.href="/login";
     }
 
     return (
         <Fragment>
           <div className="flex justify-end h-20 bg-blue-200 text-white items-center py-2">
-            {email}
+            {/* {email} */}
             <Button className="ml-5 bg-black" onClick={logoutHandle}>Logout</Button>
           </div>
           <div className="flex justify-center bg-slate-100">
             <ul role="list" className="divide-y divide-gray-100 w-full">
-      {members.map((member) => (
+      {/* {members.map((member) => (
         <li key={member.id} className="flex justify-between gap-x-6 py-5 border px-5">
           <div className="flex min-w-0 gap-x-4">
             <img alt="" src="/images/member-1.jpg" className="h-12 w-12 flex-none rounded-full bg-gray-50" />
@@ -48,7 +49,7 @@ const ListMember = () => {
           </div>
         </li>
         
-      ))}
+      ))} */}
     </ul>
         </div>
         </Fragment>
